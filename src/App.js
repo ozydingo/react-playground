@@ -1,6 +1,10 @@
 import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
+
 import logo from './logo.svg';
 import './App.css';
+
+import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 
 function App() {
   return (
@@ -12,9 +16,18 @@ function App() {
         </p>
       </header>
       <main>
+        <div className={css(styles.playingWithChildren)}>
+          <PlayingWithChildren />
+        </div>
       </main>
     </div>
   );
 }
+
+const styles = StyleSheet.create({
+  playingWithChildren: {
+    width: "200px",
+  }
+})
 
 export default App;
