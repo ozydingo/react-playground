@@ -7,7 +7,7 @@
   float: left;
   left: 0px;
   top: 0px;
-  animation: App-logo-spin infinite 20s linear;
+  animation: App-logo-spin infinite 1.5s cubic-bezier(0.5, 0.15, 0.5, 0.75);
   height: 8vmin;
   pointer-events: none;
 }
@@ -32,6 +32,6 @@
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(720deg);
   }
 }
