@@ -1,10 +1,15 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
 import logo from './logo.svg';
 import './App.css';
 
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
+
+library.add(fab, fas);
 
 function App() {
   return (
