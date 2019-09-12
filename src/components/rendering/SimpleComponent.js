@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
-function SimpleComponent(props) {
-  useEffect(() => {
-    console.log("Effect triggered")
-  }, [props.obj])
+import ChildComponent from './ChildComponent';
 
-  console.log("Simple component function called")
+function SimpleComponent() {
+  const [x, setX] = useState(0);
   return (
-    <div>Component</div>
+    <div onClick={() => setX(prev => prev + 1)}>
+      <ChildComponent obj={{a: 1, b: 2}} />
+      {x}
+    </div>
   )
 }
 

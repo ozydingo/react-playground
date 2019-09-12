@@ -8,6 +8,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
+import SimpleComponent from 'components/rendering/SimpleComponent';
 
 library.add(fab, fas);
 
@@ -23,6 +24,9 @@ function App() {
       <main>
         <div className={css(styles.playingWithChildren)}>
           <PlayingWithChildren />
+        </div>
+        <div>
+          <SimpleComponent obj={{a: 1, b: 2}} />
         </div>
       </main>
     </div>
