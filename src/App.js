@@ -9,7 +9,7 @@ import './App.css';
 
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 import SimpleComponent from 'components/rendering/SimpleComponent';
-
+import UnmountedState from 'components/unmounted-state/IsolateFetch';
 library.add(fab, fas);
 
 function App() {
@@ -25,8 +25,11 @@ function App() {
         <div className={css(styles.playingWithChildren)}>
           <PlayingWithChildren />
         </div>
-        <div>
+        <div style={{display: "none"}}>
           <SimpleComponent obj={{a: 1, b: 2}} />
+        </div>
+        <div>
+        <UnmountedState />
         </div>
       </main>
     </div>
