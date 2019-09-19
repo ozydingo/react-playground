@@ -7,6 +7,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import logo from './logo.svg';
 import './App.css';
 
+import DropZone from 'components/dropzone/DropZone';
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 import SimpleComponent from 'components/rendering/SimpleComponent';
 import UnmountedState from 'components/unmounted-state/IsolateFetch';
@@ -21,7 +22,7 @@ function App() {
           A React Playground
         </p>
       </header>
-      <main>
+      <main className={css(styles.main)}>
         <div className={css(styles.playingWithChildren)}>
           <PlayingWithChildren />
         </div>
@@ -29,7 +30,10 @@ function App() {
           <SimpleComponent obj={{a: 1, b: 2}} />
         </div>
         <div>
-        <UnmountedState />
+          <UnmountedState />
+        </div>
+        <div>
+          <DropZone />
         </div>
       </main>
     </div>
@@ -37,6 +41,11 @@ function App() {
 }
 
 const styles = StyleSheet.create({
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   playingWithChildren: {
     width: "200px",
   }
