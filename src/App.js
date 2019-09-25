@@ -7,6 +7,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import logo from './logo.svg';
 import './App.css';
 
+// import CascadeParent from 'components/cascade/Parent';
 import DropZone from 'components/dropzone/DropZone';
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 import SimpleComponent from 'components/rendering/SimpleComponent';
@@ -35,6 +36,11 @@ function App() {
         <div>
           <DropZone />
         </div>
+        {
+        // <div>
+        //   <CascadeParent />
+        // </div>
+        }
       </main>
     </div>
   );
