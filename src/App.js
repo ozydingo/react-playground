@@ -11,6 +11,7 @@ import './App.css';
 import DropZone from 'components/dropzone/DropZone';
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 import SimpleComponent from 'components/rendering/SimpleComponent';
+import StuboornCompoinent from 'components/stubborn-state/StubbornState';
 import UnmountedState from 'components/unmounted-state/IsolateFetch';
 library.add(fab, fas);
 
@@ -41,6 +42,7 @@ function App() {
         //   <CascadeParent />
         // </div>
         }
+        <StuboornCompoinent />
       </main>
     </div>
   );
