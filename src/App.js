@@ -11,6 +11,7 @@ import './App.css';
 import Activatable from 'Activatable';
 import DropZone from 'components/dropzone/DropZone';
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
+import LatchkeyKid from 'components/playing-with-children/LatchkeyKid';
 import SimpleComponent from 'components/rendering/SimpleComponent';
 import StubbornState from 'components/stubborn-state/StubbornState';
 import UnmountedState from 'components/unmounted-state/IsolateFetch';
@@ -53,6 +54,9 @@ function App() {
         */}
         <Activatable name="Stubborn State">
           <StubbornState />
+        </Activatable>
+        <Activatable name="Latchkey Kid">
+          <LatchkeyKid />
         </Activatable>
       </main>
     </div>
