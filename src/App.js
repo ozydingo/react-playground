@@ -8,10 +8,11 @@ import logo from './logo.svg';
 import './App.css';
 
 // import CascadeParent from 'components/cascade/Parent';
+import Activatable from 'Activatable';
 import DropZone from 'components/dropzone/DropZone';
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 import SimpleComponent from 'components/rendering/SimpleComponent';
-import StuboornCompoinent from 'components/stubborn-state/StubbornState';
+import StubbornState from 'components/stubborn-state/StubbornState';
 import UnmountedState from 'components/unmounted-state/IsolateFetch';
 library.add(fab, fas);
 
@@ -25,24 +26,34 @@ function App() {
         </p>
       </header>
       <main className={css(styles.main)}>
-        <div className={css(styles.playingWithChildren)}>
-          <PlayingWithChildren />
-        </div>
+        <Activatable name="Playing With Children">
+          <div className={css(styles.playingWithChildren)}>
+            <PlayingWithChildren />
+          </div>
+        </Activatable>
+        <Activatable name="SimpleComponent">
         <div style={{display: "none"}}>
           <SimpleComponent obj={{a: 1, b: 2}} />
         </div>
+        </Activatable>
+        <Activatable name="UnmountedState">
         <div>
           <UnmountedState />
         </div>
+        </Activatable>
+        <Activatable name="Drop Zone">
         <div>
           <DropZone />
         </div>
-        {
-        // <div>
-        //   <CascadeParent />
-        // </div>
-        }
-        <StuboornCompoinent />
+        </Activatable>
+        {/*
+        <Activatable name="Cascade Parent">
+          <CascadeParent />
+        </Activatable>
+        */}
+        <Activatable name="Stubborn State">
+          <StubbornState />
+        </Activatable>
       </main>
     </div>
   );
