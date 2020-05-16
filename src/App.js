@@ -10,6 +10,7 @@ import './App.css';
 // import CascadeParent from 'components/cascade/Parent';
 import Activatable from 'Activatable';
 import DropZone from 'components/dropzone/DropZone';
+import Fisherman from 'components/fishing-line/Fisherman';
 import PlayingWithChildren from 'components/playing-with-children/PlayingWithChildren';
 import LatchkeyKid from 'components/playing-with-children/LatchkeyKid';
 import SimpleComponent from 'components/rendering/SimpleComponent';
@@ -58,6 +59,10 @@ function App() {
         <Activatable name="Latchkey Kid">
           <LatchkeyKid />
         </Activatable>
+        <Activatable name="Fisherman">
+          <Fisherman borked={false}/>
+          <Fisherman borked={true}/>
+          </Activatable>
       </main>
     </div>
   );
