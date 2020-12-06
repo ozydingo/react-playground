@@ -15,6 +15,7 @@ import PlayingWithChildren from 'components/playing-with-children/PlayingWithChi
 import LatchkeyKid from 'components/playing-with-children/LatchkeyKid';
 import SimpleComponent from 'components/rendering/SimpleComponent';
 import StubbornState from 'components/stubborn-state/StubbornState';
+import TransitionUsage from "components/transition/TransitionUsage";
 import UnmountedState from 'components/unmounted-state/IsolateFetch';
 library.add(fab, fas);
 
@@ -62,7 +63,10 @@ function App() {
         <Activatable name="Fisherman">
           <Fisherman borked={false}/>
           <Fisherman borked={true}/>
-          </Activatable>
+        </Activatable>
+        <Activatable name="Transition">
+          <TransitionUsage />
+        </Activatable>
       </main>
     </div>
   );
