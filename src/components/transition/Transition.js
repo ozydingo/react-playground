@@ -2,15 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 
 import PropTypes from "prop-types";
 
+// Generate a unique key to cause React to render a component as new.
+// This can be used to instantly shift from "final" to "middle" states without
+// transition.
 function getKey() {
   return `${new Date().getTime()}-${Math.random()}`;
 }
 
 function Transition(props) {
-  const [key, setKey] = useState(getKey());
   const root = useRef(null);
-  const [styleState, setStyleState] = useState(props.in ? "middle" : "initial");
+
   const [active, setActive] = useState(props.in);
+  const [key, setKey] = useState(getKey());
+  const [styleState, setStyleState] = useState(props.in ? "middle" : "initial");
 
   function breakTransition() {
     setKey(getKey())
@@ -18,10 +22,12 @@ function Transition(props) {
 
   function waxOn() {
     setActive(true);
-    setTimeout(() => setStyleState("middle"), 35);
+    // Paint the current state before "middle" to ensure css transition.
+    window.requestAnimationFrame(() => setStyleState("middle"));
   }
 
   function waxOff() {
+    // Set `active` to `false` after final transition
     if (root.current) {
       root.current.ontransitionend = () => {
         root.current.ontransitionend = null;
@@ -47,7 +53,6 @@ function Transition(props) {
   if (props.unmount && !active) { return null; }
 
   const className = (props.transition.base || "") + " " + props.transition[styleState] ;
-
   return (
     <div ref={root} key={key} className={className}>
       {props.children}
