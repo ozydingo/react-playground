@@ -51,9 +51,15 @@ function Transition(props) {
 
   function waxOn() {
     setActive(true);
-    // Paint the current state before "middle" to ensure css transition.
-    window.requestAnimationFrame(() => setStyleState("middle"));
+    // // Unclear if this or the effect, below, is better.
+    // window.requestAnimationFrame(() => setStyleState("middle"));
   }
+
+  useEffect(() => {
+    if (styleState === "initial" && active) {
+      window.requestAnimationFrame(() => setStyleState("middle"));
+    }
+  }, [active, styleState])
 
   function waxOff() {
     if (hasTransition(root.current)) {
