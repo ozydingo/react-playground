@@ -2,50 +2,25 @@ import React, { useState } from "react";
 
 import { css, StyleSheet } from "aphrodite";
 
-import InNOut from "./InNOut";
 import Transition from "./Transition";
 
 function TransitionUsage() {
-  const [showInNOut, setShowInNOut] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
-
-  const transitionStyles = {
-    base: css(styles.base),
-    initial: css(styles.initial),
-    middle: css(styles.middle),
-    final: css(styles.final),
-  }
-
-  const inNOutStyles = {
-    base: css(styles.base),
-    initial: css(styles.initial),
-    middle: css(styles.middle),
-    final: css(styles.final),
-  }
 
   return (
     <>
       <div onClick={() => setShowTransition(!showTransition)}>Toggle</div>
       <Transition
         in={showTransition}
-        duration={1000}
-        transition={transitionStyles}
+        base={css(styles.base)}
+        initial={css(styles.initial)}
+        middle={css(styles.middle)}
+        final={css(styles.final)}
         unmount
       >
         Hello, world.
       </Transition>
       <div>end.</div>
-      <div onClick={() => setShowInNOut(!showInNOut)}>ToggleInNOut</div>
-      <InNOut
-        in={showInNOut}
-        duration={1000}
-        classes={inNOutStyles}
-        unmount
-      >
-        Hello, world.
-      </InNOut>
-      <div>end.</div>
-
     </>
   );
 }

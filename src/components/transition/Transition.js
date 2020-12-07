@@ -61,7 +61,7 @@ function Transition(props) {
 
   if (props.unmount && !active) { return null; }
 
-  const className = (props.transition.base || "") + " " + props.transition[styleState] ;
+  const className = (props.base || "") + " " + (props[styleState] || "");
   return (
     <div ref={root} key={key} className={className}>
       {props.children}
@@ -72,17 +72,11 @@ function Transition(props) {
 Transition.propTypes = {
   children: PropTypes.node,
   in: PropTypes.bool,
-  transition: PropTypes.shape({
-    base: PropTypes.string,
-    initial: PropTypes.string,
-    middle: PropTypes.string,
-    final: PropTypes.string,
-  }),
+  base: PropTypes.string,
+  initial: PropTypes.string,
+  middle: PropTypes.string,
+  final: PropTypes.string,
   unmount: PropTypes.bool,
-};
-
-Transition.defaultProps = {
-  transition: {},
 };
 
 export default Transition;
