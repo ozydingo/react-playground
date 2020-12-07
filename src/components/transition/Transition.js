@@ -37,13 +37,31 @@ function Transition(props) {
     }
   }
 
+  function resetAfterTransition() {
+    const elemenet = root.current;
+    if (!elemenet) { return; }
+
+    elemenet.ontransitionend = () => {
+      elemenet.ontransitionend = null;
+      setStyleState("before");
+    }
+  }
+
   useEffect(() => {
     if (props.unmount) {
       props.in ? waxOn() : waxOff();
     } else {
-      setStyleState(props.in ? "in" : "out");
+      if (styleState === "before" && props.in) {
+        setTimeout(() => setStyleState("in"), 100);
+        // setStyleState("in");
+      } else if (styleState === "in" && !props.in) {
+        setStyleState("out");
+        resetAfterTransition();
+      } else if (styleState === "out" && props.in) {
+        setStyleState("before");
+      }
     }
-  }, [props.in, props.unmount]);
+  }, [styleState, props.in, props.unmount]);
 
   // If using unmount, set a delay after mounting to ensure the entrance transition.
   useEffect(() => {

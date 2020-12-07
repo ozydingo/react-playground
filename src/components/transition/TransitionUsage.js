@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { css, StyleSheet } from "aphrodite";
 
+import InNOut from "./InNOut";
 import Transition from "./Transition";
 
 function TransitionUsage() {
-  const [show, setShow] = useState(false);
+  const [showInNOut, setShowInNOut] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
 
   const transitionStyles = {
     root: css(styles.root),
@@ -14,18 +16,34 @@ function TransitionUsage() {
     out: css(styles.out),
   }
 
+  const inNOutStyles = {
+    base: css(styles.root),
+    initial: css(styles.before),
+    middle: css(styles.in),
+    final: css(styles.out),
+  }
+
   return (
     <>
-      <div onClick={() => setShow(!show)}>Toggle</div>
+      <div onClick={() => setShowTransition(!showTransition)}>Toggle</div>
       <Transition
-        in={show}
+        in={showTransition}
         duration={1000}
         transition={transitionStyles}
-        unmount
       >
         Hello, world.
       </Transition>
       <div>end.</div>
+      <div onClick={() => setShowInNOut(!showInNOut)}>ToggleInNOut</div>
+      <InNOut
+        in={showInNOut}
+        duration={1000}
+        classes={inNOutStyles}
+      >
+        Hello, world.
+      </InNOut>
+      <div>end.</div>
+
     </>
   );
 }
@@ -37,6 +55,7 @@ const styles = StyleSheet.create({
     transitionDuration: "300ms",
   },
   before: {
+    pointerEvents: "none",
     opacity: "0",
     top: "30px",
   },
@@ -45,6 +64,7 @@ const styles = StyleSheet.create({
     top: "0px",
   },
   out: {
+    pointerEvents: "none",
     opacity: "0",
     top: "-30px",
   },
