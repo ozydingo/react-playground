@@ -9,6 +9,13 @@ function getKey() {
   return `${new Date().getTime()}-${Math.random()}`;
 }
 
+function hasTransition(element) {
+  if (!element) { return false; }
+
+  const transition = window.getComputedStyle(element).getPropertyValue("transition");
+  return transition !== "all 0s ease 0s";
+}
+
 function Transition(props) {
   const root = useRef(null);
 
@@ -27,12 +34,14 @@ function Transition(props) {
   }
 
   function waxOff() {
-    // Set `active` to `false` after final transition
-    if (root.current) {
+    if (hasTransition(root.current)) {
+      // Set `active` to `false` after final transition
       root.current.ontransitionend = () => {
         root.current.ontransitionend = null;
         setActive(false);
       }
+    } else {
+      setActive(false);
     }
 
     setStyleState("final");
