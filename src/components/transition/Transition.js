@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 
 import PropTypes from "prop-types";
 
+function getKey() {
+  return new Date().getTime();
+}
+
 function Transition(props) {
+  const [key, setKey] = useState(getKey());
   const root = useRef(null);
   const [styleState, setStyleState] = useState("before");
   const [mounted, setMounted] = useState(!(props.unmount && !props.in));
@@ -11,6 +16,7 @@ function Transition(props) {
     // mount before transition
     setStyleState("before");
     setMounted(true);
+    setKey(getKey());
   }
 
   function waxOff() {
@@ -44,6 +50,7 @@ function Transition(props) {
     elemenet.ontransitionend = () => {
       elemenet.ontransitionend = null;
       setStyleState("before");
+      setKey(getKey());
     }
   }
 
@@ -59,6 +66,7 @@ function Transition(props) {
         resetAfterTransition();
       } else if (styleState === "out" && props.in) {
         setStyleState("before");
+        setKey(getKey());
       }
     }
   }, [styleState, props.in, props.unmount]);
@@ -77,7 +85,7 @@ function Transition(props) {
   const className = (props.transition.root || "") + " " + props.transition[styleState] ;
 
   return (
-    <div ref={root} className={className}>
+    <div ref={root} key={key} className={className}>
       {props.children}
     </div>
   );

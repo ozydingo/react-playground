@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect,useRef,  useState } from "react"
 
 import PropTypes from "prop-types";
 
 function Item(props) {
+  const item = useRef(null);
+
   const [state, setState] = useState("initial");
 
   useEffect(() => {
@@ -11,15 +13,26 @@ function Item(props) {
   }, []);
 
   useEffect(() => {
+    function callbackAfterFinalTransition() {
+      const elemenet = item.current;
+      if (!elemenet || !props.afterFinal) { return; }
+
+      elemenet.ontransitionend = () => {
+        elemenet.ontransitionend = null;
+        props.afterFinal();
+      }
+    }
+
     if (!props.in && state === "middle") {
       setState("final");
+      callbackAfterFinalTransition()
     }
-  }, [state, props.in]);
+  }, [state, props, props.in, props.afterFinal]);
 
   const className = `${props.classes.base || ""} ${props.classes[state] || ""}`;
 
   return (
-    <div className={className}>
+    <div ref={item} className={className}>
       {props.children}
     </div>
   )
@@ -34,6 +47,7 @@ Item.propTypes = {
     middle: PropTypes.string,
     final: PropTypes.string,
   }),
+  afterFinal: PropTypes.bool,
 }
 
 function getKey() {
@@ -42,17 +56,25 @@ function getKey() {
 
 function InNOut(props) {
   const [key, setKey] = useState(getKey());
+  const [mounted, setMounted] = useState(props.in);
 
   useEffect(() => console.log(key), [key]);
 
   useEffect(() => {
     if (props.in) {
       setKey(getKey());
+      setMounted(true);
     }
   }, [props.in]);
 
+  if (props.unmount && !mounted) {
+    return null;
+  }
+
+  const callback = props.unmount && (() => setMounted(false));
+
   return (
-    <Item key={key} {...props} />
+    <Item key={key} afterFinal={callback} {...props} />
   );
 }
 
@@ -65,6 +87,7 @@ InNOut.propTypes = {
     middle: PropTypes.string,
     final: PropTypes.string,
   }),
+  unmount: PropTypes.bool,
 }
 
 export default InNOut;

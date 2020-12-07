@@ -39,6 +39,7 @@ function TransitionUsage() {
         in={showInNOut}
         duration={1000}
         classes={inNOutStyles}
+        unmount
       >
         Hello, world.
       </InNOut>
