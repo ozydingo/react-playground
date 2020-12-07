@@ -1,3 +1,25 @@
+// Transition -- Easy enter / exit transitions in React
+//
+// Usage:
+// <Transition in={true|false}>
+//   ... your components here
+// </Transiion>
+//
+// Child components will be rendered inside a <div> that will transition from
+// "initial" to "middle" states when `in` goes from false to true, and from
+// "middle" to "final" when `in` goes from true to false.
+//
+// Attach css transitions to these classes for maximal effect!
+//
+// Properties:
+//
+// in (bool) -- main toggle for component
+// base -- class applied to root <div> at all times
+// initial -- class applied prior to "in"
+// middle -- class applied when `in` is `true`
+// final -- class applied after `in` is set to `false`.
+// unmount -- Use `true` to unmount the component outside of transitions when !in
+
 import React, { useEffect, useRef, useState } from "react";
 
 import PropTypes from "prop-types";
