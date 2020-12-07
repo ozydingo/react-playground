@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { css, StyleSheet } from "aphrodite";
 
@@ -10,17 +10,17 @@ function TransitionUsage() {
   const [showTransition, setShowTransition] = useState(false);
 
   const transitionStyles = {
-    root: css(styles.root),
-    before: css(styles.before),
-    in: css(styles.in),
-    out: css(styles.out),
+    base: css(styles.base),
+    initial: css(styles.initial),
+    middle: css(styles.middle),
+    final: css(styles.final),
   }
 
   const inNOutStyles = {
-    base: css(styles.root),
-    initial: css(styles.before),
-    middle: css(styles.in),
-    final: css(styles.out),
+    base: css(styles.base),
+    initial: css(styles.initial),
+    middle: css(styles.middle),
+    final: css(styles.final),
   }
 
   return (
@@ -30,6 +30,7 @@ function TransitionUsage() {
         in={showTransition}
         duration={1000}
         transition={transitionStyles}
+        unmount
       >
         Hello, world.
       </Transition>
@@ -50,21 +51,21 @@ function TransitionUsage() {
 }
 
 const styles = StyleSheet.create({
-  root: {
+  base: {
     position: "relative",
     transitionProperty: "opacity top",
     transitionDuration: "300ms",
   },
-  before: {
+  initial: {
     pointerEvents: "none",
     opacity: "0",
     top: "30px",
   },
-  in: {
+  middle: {
     opacity: "1",
     top: "0px",
   },
-  out: {
+  final: {
     pointerEvents: "none",
     opacity: "0",
     top: "-30px",

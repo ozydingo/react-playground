@@ -24,8 +24,8 @@ function Item(props) {
     }
 
     if (!props.in && state === "middle") {
-      setState("final");
       callbackAfterFinalTransition()
+      setState("final");
     }
   }, [state, props, props.in, props.afterFinal]);
 
@@ -47,7 +47,7 @@ Item.propTypes = {
     middle: PropTypes.string,
     final: PropTypes.string,
   }),
-  afterFinal: PropTypes.bool,
+  afterFinal: PropTypes.func,
 }
 
 function getKey() {
@@ -57,8 +57,6 @@ function getKey() {
 function InNOut(props) {
   const [key, setKey] = useState(getKey());
   const [mounted, setMounted] = useState(props.in);
-
-  useEffect(() => console.log(key), [key]);
 
   useEffect(() => {
     if (props.in) {

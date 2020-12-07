@@ -3,86 +3,50 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 function getKey() {
-  return new Date().getTime();
+  return `${new Date().getTime()}-${Math.random()}`;
 }
 
 function Transition(props) {
   const [key, setKey] = useState(getKey());
   const root = useRef(null);
-  const [styleState, setStyleState] = useState("before");
-  const [mounted, setMounted] = useState(!(props.unmount && !props.in));
+  const [styleState, setStyleState] = useState(props.in ? "middle" : "initial");
+  const [active, setActive] = useState(props.in);
+
+  function breakTransition() {
+    setKey(getKey())
+  }
 
   function waxOn() {
-    // mount before transition
-    setStyleState("before");
-    setMounted(true);
-    setKey(getKey());
+    setActive(true);
+    setTimeout(() => setStyleState("middle"), 35);
   }
 
   function waxOff() {
-    // transition before unmount
-    setStyleState("out")
-  }
-
-  function transitionAfterMount() {
-    // // Doesn't work: React may choose not to render until after this state is updated.
-    // // In that case, no css transition will occur because the class is "in" from the start.
-    // setStyleState("in");
-
-    // Workaround:
-    setTimeout(() => setStyleState("in"), 35);
-  }
-
-  function unmountAfterTransition() {
-    const elemenet = root.current;
-    if (!elemenet) { return; }
-
-    elemenet.ontransitionend = () => {
-      elemenet.ontransitionend = null;
-      setMounted(false);
-    }
-  }
-
-  function resetAfterTransition() {
-    const elemenet = root.current;
-    if (!elemenet) { return; }
-
-    elemenet.ontransitionend = () => {
-      elemenet.ontransitionend = null;
-      setStyleState("before");
-      setKey(getKey());
-    }
-  }
-
-  useEffect(() => {
-    if (props.unmount) {
-      props.in ? waxOn() : waxOff();
-    } else {
-      if (styleState === "before" && props.in) {
-        setTimeout(() => setStyleState("in"), 100);
-        // setStyleState("in");
-      } else if (styleState === "in" && !props.in) {
-        setStyleState("out");
-        resetAfterTransition();
-      } else if (styleState === "out" && props.in) {
-        setStyleState("before");
-        setKey(getKey());
+    if (root.current) {
+      root.current.ontransitionend = () => {
+        root.current.ontransitionend = null;
+        setActive(false);
       }
     }
-  }, [styleState, props.in, props.unmount]);
 
-  // If using unmount, set a delay after mounting to ensure the entrance transition.
-  useEffect(() => {
-    if (props.unmount && mounted) { transitionAfterMount(); }
-  }, [mounted, props.unmount]);
+    setStyleState("final");
+  }
 
   useEffect(() => {
-    if (props.unmount && !props.in) { unmountAfterTransition(); }
-  }, [props.in, props.unmount]);
+    if (props.in && styleState === "initial") {
+      waxOn();
+    } else if (props.in && styleState === "final") {
+      breakTransition();
+      setStyleState("initial");
+      waxOn();
+    } else if (!props.in && styleState === "middle") {
+      waxOff();
+    }
+  }, [styleState, props.in]);
 
-  if (props.unmount && !mounted) { return null; }
+  if (props.unmount && !active) { return null; }
 
-  const className = (props.transition.root || "") + " " + props.transition[styleState] ;
+  const className = (props.transition.base || "") + " " + props.transition[styleState] ;
 
   return (
     <div ref={root} key={key} className={className}>
@@ -93,25 +57,18 @@ function Transition(props) {
 
 Transition.propTypes = {
   children: PropTypes.node,
-  duration: PropTypes.number,
   in: PropTypes.bool,
   transition: PropTypes.shape({
-    root: PropTypes.string,
-    before: PropTypes.string,
-    in: PropTypes.string,
-    out: PropTypes.string,
+    base: PropTypes.string,
+    initial: PropTypes.string,
+    middle: PropTypes.string,
+    final: PropTypes.string,
   }),
   unmount: PropTypes.bool,
 };
 
 Transition.defaultProps = {
-  duration: 300,
-  transition: {
-    root: "",
-    initial: "",
-    in: "",
-    out: "",
-  }
+  transition: {},
 };
 
 export default Transition;
