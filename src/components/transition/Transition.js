@@ -24,7 +24,7 @@ function Transition(props) {
   const [styleState, setStyleState] = useState(props.in ? "middle" : "initial");
 
   function breakTransition() {
-    setKey(getKey())
+    setKey(getKey());
   }
 
   function waxOn() {
@@ -39,7 +39,7 @@ function Transition(props) {
       root.current.ontransitionend = () => {
         root.current.ontransitionend = null;
         setActive(false);
-      }
+      };
     } else {
       setActive(false);
     }
